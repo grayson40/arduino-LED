@@ -1,3 +1,4 @@
+// Elements
 var slider = document.getElementById("range");
 var output = document.getElementById("output");
 var selectedIndex = 0;
@@ -9,7 +10,8 @@ let list = [
     "Sliding bar across LEDs.",
 ]
 
-output.innerHTML = slider.value; // Display the default slider value
+// Display the default slider value
+output.innerHTML = slider.value;
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function () {
@@ -44,6 +46,7 @@ function changeText(button) {
             break;
     }
 }
+
 
 // Send selected index to arduino via BLE module
 function changeLED() {
