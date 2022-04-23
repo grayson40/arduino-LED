@@ -17,39 +17,39 @@ void setup()
     randomSeed(analogRead(0));
     FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
     FastLED.setBrightness(20);
-    Serial.begin(9600);
+    Serial.begin(115200);
+    Serial.setTimeout(1);
 }
 
 void loop()
 {
-    if (Serial.isAvailable() > 0)
+    while (!Serial.available())
+        ;
+    int choice = Serial.readString().toInt();
+    switch (choice)
     {
-        int choice = Serial.read();
-        switch (choice)
-        {
-        case 1:
-            colorWipe(SLOW, 1);
-            break;
+    case 1:
+        colorWipe(SLOW, 1);
+        break;
 
-        case 2:
-            rainbow(SLOW, 1);
-            break;
+    case 2:
+        rainbow(SLOW, 1);
+        break;
 
-        case 3:
-            theaterChaseRainbow(10, MEDIUM);
-            break;
+    case 3:
+        theaterChaseRainbow(10, MEDIUM);
+        break;
 
-        case 4:
-            stripes(10);
-            break;
+    case 4:
+        stripes(10);
+        break;
 
-        case 5:
-            cylon(30, MEDIUM);
-            break;
+    case 5:
+        cylon(30, MEDIUM);
+        break;
 
-        default:
-            break;
-        }
+    default:
+        break;
     }
 }
 
