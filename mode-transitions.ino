@@ -1,4 +1,5 @@
 #include "FastLED.h"
+#include "RTClib.h"
 
 #define NUM_LEDS 400
 #define DATA_PIN 11
@@ -8,6 +9,10 @@
 #define MEDIUM 50
 #define FAST 5
 
+// RTC object
+RTC_DS3231 rtc;
+
+// LED strip
 CRGB leds[NUM_LEDS];
 
 boolean direction = FORWARD;
@@ -23,33 +28,42 @@ void setup()
 
 void loop()
 {
-    while (!Serial.available())
-        ;
-    int choice = Serial.readString().toInt();
-    switch (choice)
+    DateTime now = rtc.now();
+
+    if (now.hour >= 23 || now.hour <= 9)
     {
-    case 1:
-        colorWipe(SLOW, 1);
-        break;
+        allColor(CRGB::Black);
+    }
+    else
+    {
+        while (!Serial.available())
+            ;
+        int choice = Serial.readString().toInt();
+        switch (choice)
+        {
+        case 1:
+            colorWipe(SLOW, 1);
+            break;
 
-    case 2:
-        rainbow(SLOW, 1);
-        break;
+        case 2:
+            rainbow(SLOW, 1);
+            break;
 
-    case 3:
-        theaterChaseRainbow(10, MEDIUM);
-        break;
+        case 3:
+            theaterChaseRainbow(10, MEDIUM);
+            break;
 
-    case 4:
-        stripes(10);
-        break;
+        case 4:
+            stripes(10);
+            break;
 
-    case 5:
-        cylon(30, MEDIUM);
-        break;
+        case 5:
+            cylon(30, MEDIUM);
+            break;
 
-    default:
-        break;
+        default:
+            break;
+        }
     }
 }
 
