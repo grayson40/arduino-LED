@@ -9,27 +9,34 @@
 #define MEDIUM 50
 #define FAST 5
 
-// RTC object
+// RTC object.
 RTC_DS3231 rtc;
 
-// LED strip
+// LED strip array.
 CRGB leds[NUM_LEDS];
 
 boolean direction = FORWARD;
 
 void setup()
 {
-    randomSeed(analogRead(0));
+    // Initialize LED strip.
     FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
     FastLED.setBrightness(20);
+
+    // Initialize serial.
     Serial.begin(115200);
     Serial.setTimeout(1);
+
+    // Seed random.
+    randomSeed(analogRead(0));
 }
 
 void loop()
 {
+    // Get rtc data.
     DateTime now = rtc.now();
 
+    // Lights off from 11PM - 9AM.
     if (now.hour >= 23 || now.hour <= 9)
     {
         allColor(CRGB::Black);
@@ -143,7 +150,7 @@ void colorWipe(CRGB c, int speed, int direction)
 
 // Rainbow colors that slowly cycle across LEDs
 void rainbow(int cycles, int speed)
-{ // TODO direction
+{
     if (cycles == 0)
     {
         for (int i = 0; i < NUM_LEDS; i++)
@@ -168,8 +175,7 @@ void rainbow(int cycles, int speed)
 
 // Theater-style crawling lights
 void theaterChase(CRGB c, int cycles, int speed)
-{ // TODO direction
-
+{
     for (int j = 0; j < cycles; j++)
     {
         for (int q = 0; q < 3; q++)
@@ -193,7 +199,7 @@ void theaterChase(CRGB c, int cycles, int speed)
 
 // Theater-style crawling lights with rainbow effect
 void theaterChaseRainbow(int cycles, int speed)
-{ // TODO direction, duration
+{
     for (int j = 0; j < 256 * cycles; j++)
     { // cycle all 256 colors in the wheel
         for (int q = 0; q < 3; q++)
@@ -291,11 +297,6 @@ void stripes(CRGB c1, CRGB c2, int width)
         }
     }
     FastLED.show();
-}
-
-// Theater-style crawling of stripes
-void stripesChase(CRGB c1, CRGB c2, int width, int cycles, int speed)
-{ // TODO direction
 }
 
 // Input a value 0 to 255 to get a color value.
