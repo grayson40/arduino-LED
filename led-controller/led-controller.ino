@@ -36,14 +36,13 @@ void loop()
     // Get rtc data.
     DateTime now = rtc.now();
 
-//    // Lights off from 11PM - 9AM.
-//    if (now.hour() >= 23 || now.hour() <= 9)
-//    {
-//        allColor(CRGB::Black);
-//    }
-//    else
-//    {
-//        rainbow(SLOW, 1);
+    // Lights off from 11PM - 9AM.
+    if (now.hour() >= 23 || now.hour() <= 9)
+    {
+        allColor(CRGB::Black);
+    }
+    else
+    {
         while (!Serial.available())
             ;
         int choice = Serial.readString().toInt();
@@ -72,7 +71,7 @@ void loop()
         default:
             break;
         }
-//    }
+    }
 }
 
 // Changes all LEDS to given color
