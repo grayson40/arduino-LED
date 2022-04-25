@@ -49,7 +49,7 @@ void loop()
         switch (choice)
         {
         case 1:
-            colorWipe(SLOW, 1);
+            colorWipe(CRGB::Blue, SLOW, 1);
             break;
 
         case 2:
@@ -61,11 +61,11 @@ void loop()
             break;
 
         case 4:
-            stripes(10);
+            stripes(CRGB::Blue, CRGB::Red, 10);
             break;
 
         case 5:
-            cylon(30, MEDIUM);
+            cylon(CRGB::Blue, 30, MEDIUM);
             break;
 
         default:
